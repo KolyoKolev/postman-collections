@@ -1,159 +1,146 @@
 {
-	"info": {
-		"_postman_id": "9dc690a4-f0b0-431c-a5a4-aa669f8dcc72",
-		"name": "Pre-Request Scripts",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Pre-Request Script On A Collection Level",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"firstname\": \"{{firstname}}\",\r\n    \"lastname\": \"{{lastname}}\",\r\n    \"totalprice\": \"{{totalprice}}\",\r\n    \"depositpaid\": \"{{depositpaid}}\",\r\n    \"bookingdates\": {\r\n        \"checkin\": \"{{checkin}}\",\r\n        \"checkout\": \"{{checkout}}\"\r\n    },\r\n    \"additionalneeds\": \"{{additionalneeds}}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{rb_url}}/booking/1",
-					"host": [
-						"{{rb_url}}"
-					],
-					"path": [
-						"booking",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Pre-Request Script On A Request Level",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"const createBooking = {\r",
-							"    url: pm.environment.get('rb_url') + \"/booking\",\r",
-							"    method: \"POST\",\r",
-							"    header: 'Content-Type:application/json',\r",
-							"    body: {\r",
-							"        mode: 'raw',\r",
-							"        raw: JSON.stringify(pm.variables.get('new_booking'))\r",
-							"    }\r",
-							"}\r",
-							"\r",
-							"pm.sendRequest(createBooking, function (err, res) {\r",
-							"    pm.expect(err).to.be.null\r",
-							"    pm.variables.set('booking_id', res.json().bookingid)\r",
-							"\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{rb_url}}/booking/{{booking_id}}",
-					"host": [
-						"{{rb_url}}"
-					],
-					"path": [
-						"booking",
-						"{{booking_id}}"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"auth": {
-		"type": "basic",
-		"basic": [
-			{
-				"key": "password",
-				"value": "password123",
-				"type": "string"
-			},
-			{
-				"key": "username",
-				"value": "admin",
-				"type": "string"
-			}
-		]
-	},
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					"var firstNames = [\"Robert\", \"John\", \"Michael\", \"William\", \"David\", \"Richard\", \"Joseph\", \"Thomas\", \"Charles\", \"Christopher\"];",
-					"",
-					"var lastNames = [\"Anderson\", \"Taylor\", \"Thomas\", \"Hernandez\", \"Moore\", \"Martin\", \"Jackson\", \"Thompson\", \"White\", \"Lopez\"];",
-					"",
-					"pm.variables.set('firstname', firstNames[_.random(firstNames.length - 1)]);",
-					"pm.variables.set('lastname', lastNames[_.random(lastNames.length - 1)]);",
-					"pm.variables.set('totalprice', _.random(50, 250));",
-					"pm.variables.set('depositpaid', (_.random(1) === 1));",
-					"",
-					"const moment = require('moment');",
-					"",
-					"var checkin = moment().add('days', _.random(1, 180))",
-					"pm.variables.set('checkin', checkin.format(\"MM-DD-YYYY\"))",
-					"",
-					"var checkout = moment().add('days', _.random(1, 14))",
-					"pm.variables.set('checkout', checkout.format(\"MM-DD-YYYY\"))",
-					"",
-					"var needs = ['breakfast', 'lunch', 'dinner', null]",
-					"pm.variables.set('additionalneeds', needs[_.random(needs.length - 1)])",
-					"",
-					"var newBooking = {",
-					"    \"firstname\": pm.variables.get(\"firstname\"),",
-					"    \"lastname\": pm.variables.get(\"lastname\"),",
-					"    \"totalprice\": pm.variables.get(\"totalprice\"),",
-					"    \"depositpaid\": pm.variables.get(\"depositpaid\"),",
-					"    \"bookingdates\": {",
-					"        \"checkin\": pm.variables.get(\"checkin\"),",
-					"        \"checkout\": pm.variables.get(\"checkout\")",
-					"    },",
-					"    \"additionalneeds\": pm.variables.get(\"additionalneeds\"),",
-					"    \"bookingid\": \"\"",
-					"}",
-					"",
-					"pm.variables.set('new_booking', newBooking)"
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	]
+  "info": {
+    "_postman_id": "9dc690a4-f0b0-431c-a5a4-aa669f8dcc72",
+    "name": "Pre-Request Scripts",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Pre-Request Script On A Collection Level",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"{{firstname}}\",\r\n    \"lastname\": \"{{lastname}}\",\r\n    \"totalprice\": \"{{totalprice}}\",\r\n    \"depositpaid\": \"{{depositpaid}}\",\r\n    \"bookingdates\": {\r\n        \"checkin\": \"{{checkin}}\",\r\n        \"checkout\": \"{{checkout}}\"\r\n    },\r\n    \"additionalneeds\": \"{{additionalneeds}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{rb_url}}/booking/1",
+          "host": ["{{rb_url}}"],
+          "path": ["booking", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Pre-Request Script On A Request Level",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "const createBooking = {\r",
+              "    url: pm.environment.get('rb_url') + \"/booking\",\r",
+              "    method: \"POST\",\r",
+              "    header: 'Content-Type:application/json',\r",
+              "    body: {\r",
+              "        mode: 'raw',\r",
+              "        raw: JSON.stringify(pm.variables.get('new_booking'))\r",
+              "    }\r",
+              "}\r",
+              "\r",
+              "pm.sendRequest(createBooking, function (err, res) {\r",
+              "    pm.expect(err).to.be.null\r",
+              "    pm.variables.set('booking_id', res.json().bookingid)\r",
+              "\r",
+              "})"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{rb_url}}/booking/{{booking_id}}",
+          "host": ["{{rb_url}}"],
+          "path": ["booking", "{{booking_id}}"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "password",
+        "value": "password123",
+        "type": "string"
+      },
+      {
+        "key": "username",
+        "value": "admin",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "var firstNames = [\"Robert\", \"John\", \"Michael\", \"William\", \"David\", \"Richard\", \"Joseph\", \"Thomas\", \"Charles\", \"Christopher\"];",
+          "",
+          "var lastNames = [\"Anderson\", \"Taylor\", \"Thomas\", \"Hernandez\", \"Moore\", \"Martin\", \"Jackson\", \"Thompson\", \"White\", \"Lopez\"];",
+          "",
+          "pm.variables.set('firstname', firstNames[_.random(firstNames.length - 1)]);",
+          "pm.variables.set('lastname', lastNames[_.random(lastNames.length - 1)]);",
+          "pm.variables.set('totalprice', _.random(50, 250));",
+          "pm.variables.set('depositpaid', (_.random(1) === 1));",
+          "",
+          "const moment = require('moment');",
+          "",
+          "var checkin = moment().add('days', _.random(1, 180))",
+          "pm.variables.set('checkin', checkin.format(\"MM-DD-YYYY\"))",
+          "",
+          "var checkout = moment().add('days', _.random(1, 14))",
+          "pm.variables.set('checkout', checkout.format(\"MM-DD-YYYY\"))",
+          "",
+          "var needs = ['breakfast', 'lunch', 'dinner', null]",
+          "pm.variables.set('additionalneeds', needs[_.random(needs.length - 1)])",
+          "",
+          "var newBooking = {",
+          "    \"firstname\": pm.variables.get(\"firstname\"),",
+          "    \"lastname\": pm.variables.get(\"lastname\"),",
+          "    \"totalprice\": pm.variables.get(\"totalprice\"),",
+          "    \"depositpaid\": pm.variables.get(\"depositpaid\"),",
+          "    \"bookingdates\": {",
+          "        \"checkin\": pm.variables.get(\"checkin\"),",
+          "        \"checkout\": pm.variables.get(\"checkout\")",
+          "    },",
+          "    \"additionalneeds\": pm.variables.get(\"additionalneeds\"),",
+          "}",
+          "",
+          "pm.variables.set('new_booking', newBooking)"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ]
 }
