@@ -1,6 +1,7 @@
 # Restfull Booker Collection
 
 This Postman collection stores requests and tests done to date against the [Restfull Booker API Playground]('https://restful-booker.herokuapp.com/') created by Mark Winteringham.
+Detailed documentation for the API playground could be found [here](https://restful-booker.herokuapp.com/apidoc/index.html)
 
 ### Links to Mark's:
 
