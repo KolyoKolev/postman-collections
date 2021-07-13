@@ -20,7 +20,6 @@
 							"    const res = pm.response.json();\r",
 							"    pm.expect(res).haveOwnProperty('message');\r",
 							"    pm.expect(res.message).to.eq('Welcome to the Simple Books API.');\r",
-							"\r",
 							"});\r",
 							"\r",
 							""
