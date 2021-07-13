@@ -244,6 +244,110 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "Query By Type Fiction and Limit",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('The length of the list is 4', () => {\r",
+              "    pm.expect(res.length).eql(4)\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books?type=fiction&limit=4",
+          "host": ["{{baseUrl}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "type",
+              "value": "fiction"
+            },
+            {
+              "key": "limit",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Query By Type Non-Fiction and Limit Copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('The length of the list is exactly 2', () => {\r",
+              "    pm.expect(res.length).eql(2)\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [""],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books?type=non-fiction&limit=2",
+          "host": ["{{baseUrl}}"],
+          "path": ["books"],
+          "query": [
+            {
+              "key": "type",
+              "value": "non-fiction"
+            },
+            {
+              "key": "limit",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "event": [
