@@ -29,7 +29,58 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Healthy Check Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 400\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Has property 'error' with proper value\", () => {\r",
+							"    pm.expect(res).haveOwnProperty('error');\r",
+							"    pm.expect(res.error).to.be.a('String');\r",
+							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingBookIdErrorMessage'));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
 				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/orders",
@@ -50,7 +101,7 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					""
+					"pm.collectionVariables.get('accessToken')"
 				]
 			}
 		},
@@ -68,6 +119,10 @@
 		{
 			"key": "missingAuthorizationHeaderErrorMessage",
 			"value": "Missing Authorization header."
+		},
+		{
+			"key": "missingBookIdErrorMessage",
+			"value": "Invalid or missing bookId."
 		}
 	]
 }
