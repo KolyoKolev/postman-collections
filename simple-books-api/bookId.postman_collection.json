@@ -66,6 +66,72 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Non-Existing BookId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 404\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Has property 'message' with proper value \", () => {\r",
+							"    const res = pm.response.json();\r",
+							"    pm.expect(res).haveOwnProperty('error');\r",
+							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('noBookWithIdErrorMessage'));\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set('bookId', 100)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books/:bookId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books",
+						":bookId"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "bookId",
+							"value": "{{bookId}}"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -92,6 +158,10 @@
 		{
 			"key": "bookId",
 			"value": "1"
+		},
+		{
+			"key": "noBookWithIdErrorMessage",
+			"value": "No book with id 100"
 		}
 	]
 }
