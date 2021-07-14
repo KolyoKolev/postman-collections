@@ -252,9 +252,7 @@
 							"    const res = pm.response.json();\r",
 							"    pm.expect(res).haveOwnProperty('error');\r",
 							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('alreadyRegisteredClientErrorMessage'));\r",
-							"});\r",
-							"\r",
-							""
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -269,6 +267,56 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n   \"clientName\": \"Registered Client\",\r\n   \"clientEmail\": \"registered_client@test.test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api-clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api-clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 201\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Has property 'accessToken' \", () => {\r",
+							"    pm.expect(res).haveOwnProperty('accessToken');\r",
+							"});\r",
+							"\r",
+							"pm.globals.set('accessToken', res.accessToken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"{{$randomFullName}}\",\r\n   \"clientEmail\": \"{{$randomEmail}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -320,6 +368,10 @@
 		{
 			"key": "alreadyRegisteredClientErrorMessage",
 			"value": "API client already registered."
+		},
+		{
+			"key": "accessToken",
+			"value": ""
 		}
 	]
 }
