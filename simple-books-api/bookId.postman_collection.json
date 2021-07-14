@@ -76,14 +76,13 @@
 						"exec": [
 							"const res = pm.response.json();\r",
 							"\r",
-							"pm.test(\"Status code is 404\", () => {\r",
-							"    pm.response.to.have.status(404);\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Has property 'message' with proper value \", () => {\r",
 							"    const res = pm.response.json();\r",
-							"    pm.expect(res).haveOwnProperty('error');\r",
-							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('noBookWithIdErrorMessage'));\r",
+							"    pm.expect(res.id).to.eq(1);\r",
 							"});\r",
 							"\r",
 							""
@@ -95,7 +94,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.collectionVariables.set('bookId', 100)"
+							"pm.collectionVariables.set('bookId', 1)"
 						],
 						"type": "text/javascript"
 					}
@@ -142,13 +141,14 @@
 						"exec": [
 							"const res = pm.response.json();\r",
 							"\r",
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 404\", () => {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Has property 'message' with proper value \", () => {\r",
 							"    const res = pm.response.json();\r",
-							"    pm.expect(res.id).to.eq(1);\r",
+							"    pm.expect(res).haveOwnProperty('error');\r",
+							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('noBookWithIdErrorMessage'));\r",
 							"});\r",
 							"\r",
 							""
@@ -160,7 +160,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.collectionVariables.set('bookId', 1)"
+							"pm.collectionVariables.set('bookId', 100)"
 						],
 						"type": "text/javascript"
 					}
