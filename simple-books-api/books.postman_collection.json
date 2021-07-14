@@ -488,22 +488,61 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}/books?type={{typeValue}}&limit={{limitValue}}",
+					"raw": "{{baseUrl}}/books",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Only Available Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Available books list length is greater than 0\", () => {\r",
+							"    const availableBooks = res.filter(book => book.available === true)\r",
+							"    pm.expect(availableBooks).length.to.be.greaterThan(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books",
+					"host": [
+						"{{baseUrl}}"
 					],
-					"query": [
-						{
-							"key": "type",
-							"value": "{{typeValue}}"
-						},
-						{
-							"key": "limit",
-							"value": "{{limitValue}}"
-						}
+					"path": [
+						"books"
 					]
 				}
 			},
