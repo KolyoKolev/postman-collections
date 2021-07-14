@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "46a60288-cefd-4c67-80c8-e182c23a251a",
+		"name": "bookId",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Healthy Check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Books have correct properties and value types', () => {\r",
+							"        pm.expect(res.id).to.be.a('Number');\r",
+							"        pm.expect(res.name).to.be.a('String');\r",
+							"        pm.expect(res.author).to.be.a('String');\r",
+							"        pm.expect(res.isbn).to.be.a('String');\r",
+							"        pm.expect(res.type).to.be.a('String');\r",
+							"        pm.expect(res.price).to.be.a('Number');\r",
+							"        pm.expect(res['current-stock']).to.be.a('Number');\r",
+							"        pm.expect(res.available).to.be.a('Boolean');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books/:bookId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books",
+						":bookId"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "bookId",
+							"value": "{{bookId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "bookId",
+			"value": "1"
+		}
+	]
+}
