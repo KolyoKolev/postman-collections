@@ -272,17 +272,10 @@
           "listen": "test",
           "script": {
             "exec": [
-              "const res = pm.response.json();\r",
-              "\r",
-              "pm.test(\"Status code is 400 Bad Request\", () => {\r",
-              "    pm.response.to.have.status(400);\r",
+              "pm.test(\"Status code is 204 No Content\", () => {\r",
+              "    pm.response.to.have.status(204);\r",
               "});\r",
-              "\r",
-              "pm.test(\"Has property 'error' with proper value\", () => {\r",
-              "    pm.expect(res).haveOwnProperty('error');\r",
-              "    pm.expect(res.error).to.be.a('String');\r",
-              "    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingBookIdErrorMessage'));\r",
-              "});"
+              ""
             ],
             "type": "text/javascript"
           }
