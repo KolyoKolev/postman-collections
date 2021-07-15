@@ -1,318 +1,293 @@
 {
-	"info": {
-		"_postman_id": "53bbcb7c-1152-4336-b402-bf6526ecd73f",
-		"name": "orders",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Healthy Check",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 401 Unauthorized\", () => {\r",
-							"    pm.response.to.have.status(401);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Has property 'error' with proper value\", () => {\r",
-							"    pm.expect(res).haveOwnProperty('error');\r",
-							"    pm.expect(res.error).to.be.a('String');\r",
-							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingAuthorizationHeaderErrorMessage'));\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/orders",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"orders"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "All Orders",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 200 OK\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test('Orders have correct properties and value types', () => {\r",
-							"    res.forEach(order => {\r",
-							"        pm.expect(order.id).to.be.a('String');\r",
-							"        pm.expect(order.bookId).to.be.a('Number');\r",
-							"        pm.expect(order.customerName).to.be.a('String');\r",
-							"        pm.expect(order.createdBy).to.be.a('String');\r",
-							"        pm.expect(order.quantity).to.be.a('Number');\r",
-							"    })\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{accessToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/orders",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"orders"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Post New Order",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 201 Created\", () => {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"\r",
-							"pm.test('Order has correct properties and value types', () => {\r",
-							"    pm.expect(res.created).to.be.a('Boolean');\r",
-							"    pm.expect(res.orderId).to.be.a('String');\r",
-							"});\r",
-							"\r",
-							"pm.collectionVariables.set('orderId', res.orderId)"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{accessToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"bookId\": 4,\r\n  \"customerName\": \"{{$randomUserName}}\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/orders",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"orders"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Single Order",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 200 OK\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test('Order has correct properties and value types', () => {\r",
-							"    pm.expect(res.id).to.be.a('String');\r",
-							"    pm.expect(res.bookId).to.be.a('Number');\r",
-							"    pm.expect(res.customerName).to.be.a('String');\r",
-							"    pm.expect(res.createdBy).to.be.a('String');\r",
-							"    pm.expect(res.quantity).to.be.a('Number');\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{accessToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/orders/{{orderId}}",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"orders",
-						"{{orderId}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Invalid Or Missing BookId",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 400 Bad Request\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Has property 'error' with proper value\", () => {\r",
-							"    pm.expect(res).haveOwnProperty('error');\r",
-							"    pm.expect(res.error).to.be.a('String');\r",
-							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingBookIdErrorMessage'));\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{accessToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/orders",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"orders"
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "missingAuthorizationHeaderErrorMessage",
-			"value": "Missing Authorization header."
-		},
-		{
-			"key": "missingBookIdErrorMessage",
-			"value": "Invalid or missing bookId."
-		},
-		{
-			"key": "orderId",
-			"value": ""
-		}
-	]
+  "info": {
+    "_postman_id": "53bbcb7c-1152-4336-b402-bf6526ecd73f",
+    "name": "orders",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Healthy Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 401 Unauthorized\", () => {\r",
+              "    pm.response.to.have.status(401);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Has property 'error' with proper value\", () => {\r",
+              "    pm.expect(res).haveOwnProperty('error');\r",
+              "    pm.expect(res.error).to.be.a('String');\r",
+              "    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingAuthorizationHeaderErrorMessage'));\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "All Orders",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200 OK\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('Orders have correct properties and value types', () => {\r",
+              "    res.forEach(order => {\r",
+              "        pm.expect(order.id).to.be.a('String');\r",
+              "        pm.expect(order.bookId).to.be.a('Number');\r",
+              "        pm.expect(order.customerName).to.be.a('String');\r",
+              "        pm.expect(order.createdBy).to.be.a('String');\r",
+              "        pm.expect(order.quantity).to.be.a('Number');\r",
+              "    })\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{accessToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post New Order",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 201 Created\", () => {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test('Order has correct properties and value types', () => {\r",
+              "    pm.expect(res.created).to.be.a('Boolean');\r",
+              "    pm.expect(res.orderId).to.be.a('String');\r",
+              "});\r",
+              "\r",
+              "pm.collectionVariables.set('orderId', res.orderId)"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{accessToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"bookId\": 4,\r\n    \"customerName\": \"{{$randomUserName}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Single Order",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200 OK\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('Order has correct properties and value types', () => {\r",
+              "    pm.expect(res.id).to.be.a('String');\r",
+              "    pm.expect(res.bookId).to.be.a('Number');\r",
+              "    pm.expect(res.customerName).to.be.a('String');\r",
+              "    pm.expect(res.createdBy).to.be.a('String');\r",
+              "    pm.expect(res.quantity).to.be.a('Number');\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{accessToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders/{{orderId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders", "{{orderId}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Or Missing BookId",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 400 Bad Request\", () => {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Has property 'error' with proper value\", () => {\r",
+              "    pm.expect(res).haveOwnProperty('error');\r",
+              "    pm.expect(res.error).to.be.a('String');\r",
+              "    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingBookIdErrorMessage'));\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{accessToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "missingAuthorizationHeaderErrorMessage",
+      "value": "Missing Authorization header."
+    },
+    {
+      "key": "missingBookIdErrorMessage",
+      "value": "Invalid or missing bookId."
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    }
+  ]
 }
