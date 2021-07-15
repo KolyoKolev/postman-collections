@@ -47,6 +47,71 @@
 			"response": []
 		},
 		{
+			"name": "All Orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Orders have correct properties and value types', () => {\r",
+							"    res.forEach(order => {\r",
+							"        pm.expect(order.id).to.be.a('String');\r",
+							"        pm.expect(order.bookId).to.be.a('Number');\r",
+							"        pm.expect(order.customerName).to.be.a('String');\r",
+							"        pm.expect(order.createdBy).to.be.a('String');\r",
+							"        pm.expect(order.quantity).to.be.a('Number');\r",
+							"    })\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bookId\": 4,\r\n  \"customerName\": \"{{$randomUserName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Invalid Or Missing BookId",
 			"event": [
 				{
@@ -110,7 +175,9 @@
 							"pm.test('Order has correct properties and value types', () => {\r",
 							"    pm.expect(res.created).to.be.a('Boolean');\r",
 							"    pm.expect(res.orderId).to.be.a('String');\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set('orderId', res.orderId)"
 						],
 						"type": "text/javascript"
 					}
@@ -157,7 +224,7 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.collectionVariables.get('accessToken')"
+					""
 				]
 			}
 		},
@@ -179,6 +246,10 @@
 		{
 			"key": "missingBookIdErrorMessage",
 			"value": "Invalid or missing bookId."
+		},
+		{
+			"key": "orderId",
+			"value": ""
 		}
 	]
 }
