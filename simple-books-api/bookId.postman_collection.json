@@ -33,6 +33,13 @@
             ],
             "type": "text/javascript"
           }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": ["pm.collectionVariables.set('bookId', 1)"],
+            "type": "text/javascript"
+          }
         }
       ],
       "request": {
