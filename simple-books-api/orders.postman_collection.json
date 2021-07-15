@@ -91,62 +91,13 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"bookId\": 4,\r\n  \"customerName\": \"{{$randomUserName}}\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "{{baseUrl}}/orders/",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"orders",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Invalid Or Missing BookId",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 400 Bad Request\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Has property 'error' with proper value\", () => {\r",
-							"    pm.expect(res).haveOwnProperty('error');\r",
-							"    pm.expect(res.error).to.be.a('String');\r",
-							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingBookIdErrorMessage'));\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{accessToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/orders",
 					"host": [
@@ -205,6 +156,118 @@
 						}
 					}
 				},
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200 OK\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test('Order has correct properties and value types', () => {\r",
+							"    pm.expect(res.id).to.be.a('String');\r",
+							"    pm.expect(res.bookId).to.be.a('Number');\r",
+							"    pm.expect(res.customerName).to.be.a('String');\r",
+							"    pm.expect(res.createdBy).to.be.a('String');\r",
+							"    pm.expect(res.quantity).to.be.a('Number');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders/{{orderId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						"{{orderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Or Missing BookId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 400 Bad Request\", () => {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Has property 'error' with proper value\", () => {\r",
+							"    pm.expect(res).haveOwnProperty('error');\r",
+							"    pm.expect(res.error).to.be.a('String');\r",
+							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingBookIdErrorMessage'));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
 				"url": {
 					"raw": "{{baseUrl}}/orders",
 					"host": [
