@@ -208,9 +208,15 @@
           }
         },
         "url": {
-          "raw": "{{baseUrl}}/orders/{{orderId}}",
+          "raw": "{{baseUrl}}/orders/:orderId",
           "host": ["{{baseUrl}}"],
-          "path": ["orders", "{{orderId}}"]
+          "path": ["orders", ":orderId"],
+          "variable": [
+            {
+              "key": "orderId",
+              "value": "{{orderId}}"
+            }
+          ]
         }
       },
       "response": []
@@ -255,6 +261,65 @@
           "raw": "{{baseUrl}}/orders",
           "host": ["{{baseUrl}}"],
           "path": ["orders"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Existing Username",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 400 Bad Request\", () => {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Has property 'error' with proper value\", () => {\r",
+              "    pm.expect(res).haveOwnProperty('error');\r",
+              "    pm.expect(res.error).to.be.a('String');\r",
+              "    pm.expect(res.error).to.eq(pm.collectionVariables.get('missingBookIdErrorMessage'));\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{accessToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"customerName\": \"{{$randomFullName}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/orders/:orderId",
+          "host": ["{{baseUrl}}"],
+          "path": ["orders", ":orderId"],
+          "variable": [
+            {
+              "key": "orderId",
+              "value": "{{orderId}}"
+            }
+          ]
         }
       },
       "response": []
