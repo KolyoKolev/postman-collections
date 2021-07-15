@@ -1,232 +1,209 @@
 {
-	"info": {
-		"_postman_id": "46a60288-cefd-4c67-80c8-e182c23a251a",
-		"name": "bookId",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Healthy Check",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test('Books have correct properties and value types', () => {\r",
-							"        pm.expect(res.id).to.be.a('Number');\r",
-							"        pm.expect(res.name).to.be.a('String');\r",
-							"        pm.expect(res.author).to.be.a('String');\r",
-							"        pm.expect(res.isbn).to.be.a('String');\r",
-							"        pm.expect(res.type).to.be.a('String');\r",
-							"        pm.expect(res.price).to.be.a('Number');\r",
-							"        pm.expect(res['current-stock']).to.be.a('Number');\r",
-							"        pm.expect(res.available).to.be.a('Boolean');\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/books/:bookId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"books",
-						":bookId"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
-						}
-					],
-					"variable": [
-						{
-							"key": "bookId",
-							"value": "{{bookId}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Existing BookId",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Has property 'message' with proper value \", () => {\r",
-							"    const res = pm.response.json();\r",
-							"    pm.expect(res.id).to.eq(1);\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.collectionVariables.set('bookId', 1)"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/books/:bookId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"books",
-						":bookId"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
-						}
-					],
-					"variable": [
-						{
-							"key": "bookId",
-							"value": "{{bookId}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Non-Existing BookId",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const res = pm.response.json();\r",
-							"\r",
-							"pm.test(\"Status code is 404\", () => {\r",
-							"    pm.response.to.have.status(404);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Has property 'message' with proper value \", () => {\r",
-							"    const res = pm.response.json();\r",
-							"    pm.expect(res).haveOwnProperty('error');\r",
-							"    pm.expect(res.error).to.eq(pm.collectionVariables.get('noBookWithIdErrorMessage'));\r",
-							"});\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.collectionVariables.set('bookId', 100)"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/books/:bookId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"books",
-						":bookId"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
-						}
-					],
-					"variable": [
-						{
-							"key": "bookId",
-							"value": "{{bookId}}"
-						}
-					]
-				}
-			},
-			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "bookId",
-			"value": "1"
-		},
-		{
-			"key": "noBookWithIdErrorMessage",
-			"value": "No book with id 100"
-		}
-	]
+  "info": {
+    "_postman_id": "46a60288-cefd-4c67-80c8-e182c23a251a",
+    "name": "bookId",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Healthy Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200 OK\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test('Books have correct properties and value types', () => {\r",
+              "        pm.expect(res.id).to.be.a('Number');\r",
+              "        pm.expect(res.name).to.be.a('String');\r",
+              "        pm.expect(res.author).to.be.a('String');\r",
+              "        pm.expect(res.isbn).to.be.a('String');\r",
+              "        pm.expect(res.type).to.be.a('String');\r",
+              "        pm.expect(res.price).to.be.a('Number');\r",
+              "        pm.expect(res['current-stock']).to.be.a('Number');\r",
+              "        pm.expect(res.available).to.be.a('Boolean');\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books/:bookId",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", ":bookId"],
+          "query": [
+            {
+              "key": "",
+              "value": null,
+              "disabled": true
+            }
+          ],
+          "variable": [
+            {
+              "key": "bookId",
+              "value": "{{bookId}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Existing BookId",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200 OK\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Has property 'message' with proper value \", () => {\r",
+              "    const res = pm.response.json();\r",
+              "    pm.expect(res.id).to.eq(1);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": ["pm.collectionVariables.set('bookId', 1)"],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books/:bookId",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", ":bookId"],
+          "query": [
+            {
+              "key": "",
+              "value": null,
+              "disabled": true
+            }
+          ],
+          "variable": [
+            {
+              "key": "bookId",
+              "value": "{{bookId}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Non-Existing BookId",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 404 Not Found\", () => {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Has property 'message' with proper value \", () => {\r",
+              "    const res = pm.response.json();\r",
+              "    pm.expect(res).haveOwnProperty('error');\r",
+              "    pm.expect(res.error).to.eq(pm.collectionVariables.get('noBookWithIdErrorMessage'));\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": ["pm.collectionVariables.set('bookId', 100)"],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/books/:bookId",
+          "host": ["{{baseUrl}}"],
+          "path": ["books", ":bookId"],
+          "query": [
+            {
+              "key": "",
+              "value": null,
+              "disabled": true
+            }
+          ],
+          "variable": [
+            {
+              "key": "bookId",
+              "value": "{{bookId}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "bookId",
+      "value": "1"
+    },
+    {
+      "key": "noBookWithIdErrorMessage",
+      "value": "No book with id 100"
+    }
+  ]
 }
